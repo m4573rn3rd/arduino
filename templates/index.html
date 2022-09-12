@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="../static/SmartTrolley.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<div class="graph">
+    <canvas id="chart"></canvas>
+        <script>
+        var ctx = document.getElementById('chart').getContext('2d')
+        var getData = $.get('/data');
+        getData.done(function(results) {
+            var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Tue 11','3am', '6am', '9am', '12pm', '3pm', '6pm', '9pm', 'Wed 12'],
+                datasets: [{
+                    label: "trolley1",
+                    fill: false,
+                    data: results.results,
+                    borderWidth: 1,
+                    borderColor: 'black',
+                }, {
+                    label: "trolley2",
+                    fill: false,
+                    data: results.results,
+                    borderWidth: 1,
+                    borderColor: 'red',
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'top',
+                    align: 'start'
+                },
+                title: { 
+                    display: 'true',
+                    fontSize: 15,
+                    text: 'Temperature recordings'
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            max: 30,
+                            min: 12,
+                            beginAtZero: false,
+                        }
+                    }]
+                }
+            }
+        });
+    })
+        </script>
+    </div>
